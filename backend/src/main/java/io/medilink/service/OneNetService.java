@@ -75,7 +75,7 @@ public class OneNetService {
             JsonObject stream = e.getAsJsonObject();
             String id = stream.get("id").getAsString();
             JsonArray points = stream.getAsJsonArray("datapoints");
-            if (points == null || points.isEmpty()) continue;
+            if (points == null || points.size() == 0) continue;
             JsonElement value = points.get(0).getAsJsonObject().get("value");
             if (value != null && value.isJsonPrimitive()) {
                 try {

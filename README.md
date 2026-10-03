@@ -88,3 +88,4 @@ Real database passwords, OneNET API keys, Wi-Fi credentials and device identifie
 - [API Reference](docs/API.md)
 - [Deployment Guide](docs/DEPLOYMENT.md)
 - [Security Notes](docs/SECURITY.md)
+- [Integration Notes](docs/MIGRATION.md)
