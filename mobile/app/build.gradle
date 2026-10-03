@@ -1,0 +1,48 @@
+plugins {
+    id 'com.android.application'
+}
+
+def apiBaseUrl = project.findProperty("MEDILINK_API_BASE_URL") ?: "http://10.0.2.2:8080/medilink/"
+
+android {
+    namespace 'io.medilink.mobile'
+    compileSdk 35
+
+    defaultConfig {
+        applicationId "io.medilink.mobile"
+        minSdk 24
+        targetSdk 35
+        versionCode 1
+        versionName "1.0.0"
+
+        buildConfigField "String", "API_BASE_URL", '"' + apiBaseUrl + '"'
+        manifestPlaceholders = [usesCleartextTraffic: "true"]
+    }
+
+    buildFeatures {
+        buildConfig true
+    }
+
+    buildTypes {
+        debug {
+            manifestPlaceholders = [usesCleartextTraffic: "true"]
+        }
+        release {
+            minifyEnabled false
+            manifestPlaceholders = [usesCleartextTraffic: "false"]
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+}
+
+dependencies {
+    implementation 'androidx.appcompat:appcompat:1.7.0'
+    implementation 'com.google.android.material:material:1.12.0'
+    implementation 'com.squareup.okhttp3:okhttp:4.12.0'
+    implementation 'com.google.code.gson:gson:2.11.0'
+}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="设备状态"
+            android:textSize="28sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/temperatureText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="温度：--"
+            android:textSize="20sp"
+            android:layout_marginTop="20dp" />
+
+        <TextView
+            android:id="@+id/humidityText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="湿度：--"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp" />
+
+        <TextView
+            android:id="@+id/medicineStateText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="服药状态：--"
+            android:textSize="20sp"
+            android:layout_marginTop="8dp" />
+
+        <Button android:id="@+id/refreshButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="刷新设备数据" android:layout_marginTop="18dp" />
+        <Button android:id="@+id/beepOnButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="开启蜂鸣器" />
+        <Button android:id="@+id/beepOffButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="关闭蜂鸣器" />
+        <Button android:id="@+id/fanOnButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="开启风扇" />
+        <Button android:id="@+id/fanOffButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="关闭风扇" />
+
+        <Button android:id="@+id/medicinesButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="用药管理" android:layout_marginTop="18dp" />
+        <Button android:id="@+id/historyButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="服药记录" />
+        <Button android:id="@+id/feedbackButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="意见反馈" />
+        <Button android:id="@+id/logoutButton" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="退出登录" android:layout_marginTop="18dp" />
+
+    </LinearLayout>
+</ScrollView>
