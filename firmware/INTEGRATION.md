@@ -1,33 +1,38 @@
-# STM32 Integration
+# STM32 Integration / STM32 集成说明
 
-This repository keeps application logic separate from CubeMX-generated files.
+## 1. Add Application Files / 添加应用层文件
 
-## 1. Copy application sources
+**English:** Add the following files to the existing STM32CubeMX project.
 
-Add these files to the existing STM32 project:
+**中文：** 将以下文件加入现有 STM32CubeMX 工程。
 
 - `Core/Src/medilink_protocol.c`
 - `Core/Src/medilink_tasks.c`
 - `App/Src/medilink_hal.c`
 
-Add the corresponding include directories.
+Also add the corresponding include directories.  
+同时请将对应头文件目录加入编译器包含路径。
 
-## 2. Bind hardware hooks
+## 2. Bind Hardware Drivers / 绑定硬件驱动
 
-Provide strong implementations for the functions declared in `App/Inc/medilink_hal.h`.
+**English:** Implement the functions declared in `App/Inc/medilink_hal.h` using the actual board drivers.
 
-Typical bindings:
+**中文：** 根据实际硬件工程，对 `App/Inc/medilink_hal.h` 中声明的接口进行实现。
 
-- DHT11 → `medilink_hal_read_temperature_humidity`
-- BH1750 → `medilink_hal_read_illumination`
-- GPIO/PWM buzzer → `medilink_hal_set_buzzer`
-- Fan GPIO/PWM → `medilink_hal_set_fan`
-- ESP8266 + MQTT → network and MQTT hooks
-- Medicine-box sensor/servo logic → medicine trigger hook
+Typical mappings / 典型映射关系：
 
-## 3. Start the application
+- DHT11 → temperature and humidity / 温湿度
+- BH1750 → illumination / 光照
+- GPIO or PWM → buzzer / 蜂鸣器
+- GPIO or PWM → fan / 风扇
+- ESP8266 + MQTT → network communication / 网络通信
+- Medicine-box sensor or servo → medicine state / 药箱状态
 
-After HAL initialization and before `vTaskStartScheduler()`, call:
+## 3. Start FreeRTOS Application / 启动 FreeRTOS 应用
+
+**English:** After HAL initialization and before `vTaskStartScheduler()`, call:
+
+**中文：** 在 HAL 初始化完成后、`vTaskStartScheduler()` 之前调用：
 
 ```c
 if (!medilink_app_start()) {
@@ -35,6 +40,8 @@ if (!medilink_app_start()) {
 }
 ```
 
-## 4. Credentials
+## 4. Credentials / 凭据管理
 
-Keep `medilink_config.h` local. Only the example configuration belongs in Git.
+**English:** Keep `medilink_config.h` local and do not commit real credentials.
+
+**中文：** `medilink_config.h` 应仅保存在本地，不要将真实 Wi-Fi、MQTT 或 OneNET 凭据提交到 GitHub。

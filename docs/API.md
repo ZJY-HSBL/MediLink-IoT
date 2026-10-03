@@ -1,16 +1,22 @@
-# API Reference
+# API Reference / API 接口说明
 
-Base path: `/api`
+Base path / 基础路径：`/api`
 
-All authenticated endpoints require:
+## Authentication / 身份认证
+
+**English:** Authenticated endpoints require a Bearer Token.
+
+**中文：** 需要登录的接口必须携带 Bearer Token。
 
 ```http
 Authorization: Bearer <token>
 ```
 
-## Authentication
+## 1. Register / 用户注册
 
-### POST /api/auth/register
+### POST `/api/auth/register`
+
+Request / 请求：
 
 ```json
 {
@@ -20,17 +26,26 @@ Authorization: Bearer <token>
 }
 ```
 
-### POST /api/auth/login
+**English:** Creates a user and returns an authentication token.  
+**中文：** 创建用户并返回登录 Token。
 
-Returns an authentication token.
+## 2. Login / 用户登录
 
-## Medicines
+### POST `/api/auth/login`
 
-### GET /api/medicines
+**English:** Verifies username and password and returns a token.  
+**中文：** 校验用户名和密码，登录成功后返回 Token。
 
-Returns the current user's medication list.
+## 3. Medicine List / 用药列表
 
-### POST /api/medicines
+### GET `/api/medicines`
+
+**English:** Returns the current user's medication list.  
+**中文：** 获取当前用户的用药信息列表。
+
+## 4. Add Medicine / 添加用药
+
+### POST `/api/medicines`
 
 ```json
 {
@@ -41,11 +56,18 @@ Returns the current user's medication list.
 }
 ```
 
-## Device
+**中文示例说明：**
 
-### GET /api/device/status
+- `name`：药品名称
+- `dosage`：剂量
+- `scheduleTime`：计划服药时间
+- `notes`：备注
 
-Example response:
+## 5. Device Status / 设备状态
+
+### GET `/api/device/status`
+
+Response / 返回：
 
 ```json
 {
@@ -55,7 +77,12 @@ Example response:
 }
 ```
 
-### POST /api/device/control
+**English:** Returns the latest temperature, humidity and medication state.  
+**中文：** 返回最新温度、湿度与服药状态。
+
+## 6. Device Control / 设备控制
+
+### POST `/api/device/control`
 
 ```json
 {
@@ -63,20 +90,29 @@ Example response:
 }
 ```
 
-Supported commands: `BEEP_ON`, `BEEP_OFF`, `FAN_ON`, `FAN_OFF`.
+Supported commands / 支持指令：
 
-## History
+- `BEEP_ON` — Buzzer on / 开启蜂鸣器
+- `BEEP_OFF` — Buzzer off / 关闭蜂鸣器
+- `FAN_ON` — Fan on / 开启风扇
+- `FAN_OFF` — Fan off / 关闭风扇
 
-### GET /api/history
+## 7. Medication History / 服药历史
 
-Returns recent medication records.
+### GET `/api/history`
 
-## Feedback
+**English:** Returns recent medication records for the current user.  
+**中文：** 获取当前用户最近的服药记录。
 
-### POST /api/feedback
+## 8. Feedback / 意见反馈
+
+### POST `/api/feedback`
 
 ```json
 {
   "message": "Device reminder works normally."
 }
 ```
+
+**English:** Submits user feedback.  
+**中文：** 提交用户反馈信息。
