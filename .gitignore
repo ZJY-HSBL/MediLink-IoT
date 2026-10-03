@@ -1,0 +1,15 @@
+target/
+build/
+.gradle/
+.idea/
+*.iml
+local.properties
+.env
+*.log
+.DS_Store
+Thumbs.db
+Objects/
+Listings/
+Debug/
+Release/
+*.uvguix.*
