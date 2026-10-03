@@ -1,15 +1,37 @@
-target/
-build/
-.gradle/
+# Java / Maven
+backend/target/
+*.class
+*.log
+backend/src/main/resources/application.properties
+
+# IntelliJ IDEA
 .idea/
 *.iml
+out/
+
+# Android / Gradle
+.gradle/
+**/build/
 local.properties
-.env
-*.log
-.DS_Store
-Thumbs.db
+mobile/.idea/
+mobile/.gradle/
+
+# STM32 / Keil / IAR generated files
 Objects/
 Listings/
 Debug/
 Release/
 *.uvguix.*
+*.dep
+*.bak
+*.tmp
+firmware/Core/Inc/medilink_config.h
+
+# Environment / secrets
+.env
+.env.*
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
