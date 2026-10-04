@@ -2,7 +2,10 @@ plugins {
     id 'com.android.application'
 }
 
-def apiBaseUrl = project.findProperty("MEDILINK_API_BASE_URL") ?: "http://10.0.2.2:8080/medilink/"
+def apiBaseUrl = providers.gradleProperty("MEDILINK_API_BASE_URL").orNull
+if (apiBaseUrl == null || apiBaseUrl.isBlank()) {
+    throw new GradleException("MEDILINK_API_BASE_URL is required. Set it in Gradle properties or pass -PMEDILINK_API_BASE_URL=...")
+}
 
 android {
     namespace 'io.medilink.mobile'

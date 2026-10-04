@@ -19,21 +19,17 @@ public final class AppConfig {
 
     private AppConfig() {}
 
-    public static String get(String key, String defaultValue) {
+    public static String required(String key) {
         String envKey = key.toUpperCase().replace('.', '_');
         String env = System.getenv(envKey);
         if (env != null && !env.isBlank()) {
-            return env;
+            return env.trim();
         }
-        String value = PROPS.getProperty(key);
-        return value == null || value.isBlank() ? defaultValue : value.trim();
-    }
 
-    public static String required(String key) {
-        String value = get(key, null);
-        if (value == null) {
+        String value = PROPS.getProperty(key);
+        if (value == null || value.isBlank()) {
             throw new IllegalStateException("Missing required configuration: " + key);
         }
-        return value;
+        return value.trim();
     }
 }

@@ -143,7 +143,6 @@ Real database passwords, OneNET API keys, Wi-Fi passwords, MQTT credentials, and
 - [API Reference / 接口说明](docs/API.md)
 - [Deployment Guide / 部署说明](docs/DEPLOYMENT.md)
 - [Security Notes / 安全说明](docs/SECURITY.md)
-- [Integration Notes / 整合说明](docs/MIGRATION.md)
 
 ## Project Positioning / 项目定位
 

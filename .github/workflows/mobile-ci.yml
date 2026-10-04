@@ -28,4 +28,4 @@ jobs:
         with:
           gradle-version: "8.9"
       - name: Assemble debug APK
-        run: gradle --no-daemon :app:assembleDebug
+        run: gradle --no-daemon :app:assembleDebug -PMEDILINK_API_BASE_URL=http://10.0.2.2:8080/medilink/

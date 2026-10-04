@@ -23,8 +23,7 @@ public class OneNetService {
 
     public DeviceSnapshot fetchSnapshot() throws IOException, InterruptedException {
         String deviceId = AppConfig.required("onenet.deviceId");
-        String url = AppConfig.required("onenet.snapshotUrl")
-                .replace("{deviceId}", deviceId);
+        String url = AppConfig.required("onenet.snapshotUrl").replace("{deviceId}", deviceId);
 
         HttpRequest request = HttpRequest.newBuilder(URI.create(url))
                 .timeout(Duration.ofSeconds(10))
@@ -40,16 +39,15 @@ public class OneNetService {
         JsonObject root = Json.GSON.fromJson(response.body(), JsonObject.class);
         Map<String, Double> values = parseDatastreams(root);
         return new DeviceSnapshot(
-                values.getOrDefault("temperature", 0.0),
-                values.getOrDefault("humidity", 0.0),
-                values.getOrDefault("take_medicine", 0.0).intValue()
+                requireValue(values, "temperature"),
+                requireValue(values, "humidity"),
+                (int) requireValue(values, "take_medicine")
         );
     }
 
     public void send(DeviceCommand command) throws IOException, InterruptedException {
         String deviceId = AppConfig.required("onenet.deviceId");
-        String url = AppConfig.required("onenet.commandUrl")
-                .replace("{deviceId}", deviceId);
+        String url = AppConfig.required("onenet.commandUrl").replace("{deviceId}", deviceId);
 
         HttpRequest request = HttpRequest.newBuilder(URI.create(url))
                 .timeout(Duration.ofSeconds(10))
@@ -66,16 +64,22 @@ public class OneNetService {
 
     private Map<String, Double> parseDatastreams(JsonObject root) throws IOException {
         Map<String, Double> values = new HashMap<>();
-        if (!root.has("data")) throw new IOException("OneNET response has no data field");
+        if (root == null || !root.has("data")) {
+            throw new IOException("OneNET response has no data field");
+        }
         JsonObject data = root.getAsJsonObject("data");
         JsonArray streams = data.getAsJsonArray("datastreams");
-        if (streams == null) throw new IOException("OneNET response has no datastreams");
+        if (streams == null) {
+            throw new IOException("OneNET response has no datastreams");
+        }
 
-        for (JsonElement e : streams) {
-            JsonObject stream = e.getAsJsonObject();
+        for (JsonElement element : streams) {
+            JsonObject stream = element.getAsJsonObject();
             String id = stream.get("id").getAsString();
             JsonArray points = stream.getAsJsonArray("datapoints");
-            if (points == null || points.size() == 0) continue;
+            if (points == null || points.isEmpty()) {
+                continue;
+            }
             JsonElement value = points.get(0).getAsJsonObject().get("value");
             if (value != null && value.isJsonPrimitive()) {
                 try {
@@ -87,6 +91,14 @@ public class OneNetService {
         return values;
     }
 
+    private double requireValue(Map<String, Double> values, String stream) throws IOException {
+        Double value = values.get(stream);
+        if (value == null) {
+            throw new IOException("OneNET response is missing required stream: " + stream);
+        }
+        return value;
+    }
+
     public enum DeviceCommand {
         BEEP_ON("BEEPON"),
         BEEP_OFF("BEEPOFF"),
@@ -94,6 +106,7 @@ public class OneNetService {
         FAN_OFF("FANOFF");
 
         public final String payload;
+
         DeviceCommand(String payload) {
             this.payload = payload;
         }
